@@ -267,5 +267,53 @@ div[data-baseweb="popover"] ul{
     border-color:var(--b1)!important;
 }
 
+/* ── Sidebar dark theme ── */
+[data-testid="stSidebar"]{
+    background-color:var(--bg)!important;
+    border-right:1px solid var(--b0)!important;
+}
+[data-testid="stSidebarContent"]{
+    background-color:var(--bg)!important;
+}
+[data-testid="stSidebar"] section{
+    background-color:var(--bg)!important;
+}
+[data-testid="stSidebar"] *{
+    color:var(--t1)!important;
+}
+[data-testid="stSidebar"] label,
+[data-testid="stSidebar"] p,
+[data-testid="stSidebar"] span{
+    color:var(--t1)!important;
+    -webkit-text-fill-color:var(--t1)!important;
+}
+[data-testid="stSidebar"] div[data-testid="stFileUploader"]{
+    background:var(--s0)!important;
+    border:2px dashed var(--b1)!important;
+    border-radius:var(--radius-lg)!important;
+}
+[data-testid="stSidebar"] div[data-testid="stFileUploader"]:hover{
+    border-color:var(--blue)!important;
+}
+[data-testid="stSidebar"] button{
+    background-color:var(--s1)!important;
+    color:var(--t0)!important;
+    border:1px solid var(--b1)!important;
+    border-radius:var(--radius)!important;
+}
+[data-testid="stSidebar"] button:hover{
+    border-color:var(--blue)!important;
+    background-color:var(--blue-g)!important;
+}
+/* Sidebar collapse arrow button */
+[data-testid="stSidebarCollapseButton"] button{
+    background-color:var(--s1)!important;
+    border:1px solid var(--b0)!important;
+}
+[data-testid="stSidebarCollapseButton"] button svg{
+    fill:var(--t1)!important;
+    stroke:var(--t1)!important;
+}
+
 </style>
 """

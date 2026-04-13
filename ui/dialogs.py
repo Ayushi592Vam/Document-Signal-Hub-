@@ -54,82 +54,15 @@ from modules.excel_renderer import (
 
 @st.dialog("Cell View", width="large")
 def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> None:
-    """
-    Render a modal popup showing the raw and modified values for a single
-    cell, plus a highlighted pixel-level preview of that cell in its
-    surrounding sheet context.
-
-    For .xlsx files the full sheet is rendered to a PIL Image (cached in
-    session state so subsequent opens are instant), the target cell is
-    highlighted with a yellow fill and amber border, and a padded context
-    crop is displayed via ``st.image``.
-
-    For .csv files a plain HTML table is rendered showing the rows
-    surrounding the target row, with the target cell highlighted in gold.
-
-    Args:
-        field (str): The standard field name to display as the dialog
-            heading (e.g. "Claim Number", "Loss Date").
-        info (dict): Cell-info dict for the field. Must contain at least:
-            - "value"     (str)      : raw extracted value from the file.
-            - "modified"  (str|None) : user-edited value, or None.
-            - "excel_row" (int|None) : 1-based row index in the source file.
-            - "excel_col" (int|None) : 1-based column index in the source file.
-        excel_path (str): Absolute or relative path to the source .xlsx
-            or .csv file. The file extension determines the rendering path.
-        sheet_name (str): The sheet tab to render. Ignored for CSV files.
-
-    Returns:
-        None. All output is written directly to the Streamlit dialog.
-
-    Side effects:
-        - On first call for a given (excel_path, sheet_name) pair, renders
-          the full sheet and caches the result in
-          ``st.session_state["_rendered_{excel_path}_{sheet_name}"]``.
-          Subsequent calls read from this cache.
-
-    Example trigger:
-        >>> # Called when user clicks the eye icon on a field row
-        >>> show_eye_popup("Loss Date", info, "uploads/report.xlsx", "Q1 Claims")
-
-    Dependencies:
-        - :func:`modules.excel_renderer.render_excel_sheet`   : full sheet render.
-        - :func:`modules.excel_renderer.get_cell_pixel_bbox`  : cell pixel coords.
-        - :func:`modules.excel_renderer.crop_context`         : context crop.
-        - ``PIL.ImageDraw``                                   : cell highlight overlay.
-        - ``openpyxl.utils.get_column_letter``               : row/col display label.
-        - ``csv`` (stdlib)                                    : CSV file reading.
-        - ``streamlit``                                       : dialog and image rendering.
-    """
     import os
     raw_value  = info.get("value", "") or ""
     mod_value  = info.get("modified", raw_value) or raw_value
     target_row = info.get("excel_row")
     target_col = info.get("excel_col")
-
+ 
     st.markdown(f"### 📍 {field}")
-
+ 
     def _val_box(label: str, val: str, color: str = "#4f9cf9"):
-        """
-        Render a labelled monospace value box using inline HTML.
-
-        Displays a small uppercase label in the given accent colour above
-        a dark rounded box containing the value text. Empty values are
-        replaced with a grey "(empty)" placeholder so the box is never
-        blank.
-
-        Args:
-            label (str): Short descriptor shown above the box in uppercase
-                (e.g. "Extracted Value (raw from file)").
-            val (str): The value to display inside the box. Pass an empty
-                string or None to show the "(empty)" placeholder.
-            color (str): CSS hex colour for the label text and the box's
-                subtle accent. Defaults to blue (#4f9cf9).
-
-        Returns:
-            None. Writes directly to the Streamlit dialog via
-            ``st.markdown(..., unsafe_allow_html=True)``.
-        """
         _empty_html = "<span style='color:#555;'>( empty )</span>"
         _content    = val if val else _empty_html
         st.markdown(
@@ -144,11 +77,13 @@ def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> 
             f"</div></div>",
             unsafe_allow_html=True,
         )
-
+ 
     _val_box("Extracted Value (raw from file)", raw_value, "#34d399")
     if mod_value and mod_value != raw_value:
         _val_box("Modified Value (user edited)", mod_value, "#f5c842")
-
+ 
+    ext = os.path.splitext(excel_path)[1].lower()
+ 
     if target_row and target_col:
         col_letter = get_column_letter(target_col)
         st.markdown(
@@ -158,23 +93,143 @@ def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> 
             f"</div>",
             unsafe_allow_html=True,
         )
+    elif target_row and ext == ".pdf":
+        st.markdown(
+            f"<div style='font-size:12px;color:#a0a0c8;font-family:monospace;margin-bottom:12px;'>"
+            f"📄 PDF Page <b style='color:#4f9cf9;'>{target_row}</b>"
+            f"</div>",
+            unsafe_allow_html=True,
+        )
     else:
         st.warning("No cell location recorded for this field.")
         return
-
-    ext = os.path.splitext(excel_path)[1].lower()
+ 
     st.markdown("---")
+ 
+    # ── PDF branch ────────────────────────────────────────────────────────────
+    if ext == ".pdf":
+        source_text      = info.get("source_text", "")
+        bounding_polygon = info.get("bounding_polygon")
+        page_width       = info.get("page_width")  or 8.5
+        page_height      = info.get("page_height") or 11.0
+ 
+        st.markdown(
+            f"<div style='font-size:10px;color:#4f9cf9;font-weight:700;font-family:monospace;"
+            f"text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;'>"
+            f"📄 PDF Source — Page {target_row}</div>",
+            unsafe_allow_html=True,
+        )
+ 
+        if bounding_polygon:
+            # ── Render PDF page with Azure DI bounding box highlight ──────────
+            _pdf_cache_key = f"_pdf_render_{excel_path}_{target_row}_{field}"
+            with st.spinner("Rendering PDF page…"):
+                if _pdf_cache_key not in st.session_state:
+                    try:
+                        from modules.excel_renderer import render_pdf_page_with_highlight
+                        full_img, cropped_img = render_pdf_page_with_highlight(
+                            pdf_path           = excel_path,
+                            page_number        = int(target_row),
+                            bounding_polygon   = bounding_polygon,
+                            page_width_inches  = float(page_width),
+                            page_height_inches = float(page_height),
+                            dpi                = 150,
+                        )
+                        st.session_state[_pdf_cache_key] = (full_img, cropped_img)
+                    except Exception as e:
+                        st.session_state[_pdf_cache_key] = (None, None)
+                        st.error(f"PDF render error: {e}")
+ 
+                full_img, cropped_img = st.session_state.get(_pdf_cache_key, (None, None))
+ 
+            if cropped_img is not None:
+                st.image(
+                    cropped_img,
+                    use_container_width=True,
+                    caption=f"Field '{field}' highlighted on PDF Page {target_row}",
+                )
+                # Show source text below the image as context
+                if source_text:
+                    st.markdown(
+                        f"<div style='background:#12121c;border:1px solid #2a2a45;"
+                        f"border-radius:6px;padding:8px 12px;font-family:monospace;"
+                        f"font-size:11px;color:#a0a0c8;margin-top:8px;'>"
+                        f"{source_text}</div>",
+                        unsafe_allow_html=True,
+                    )
+            else:
+                # Render failed — fall back to source text
+                st.warning(
+                    "Could not render PDF page image. "
+                    "Install pymupdf with: `pip install pymupdf`"
+                )
+                st.markdown(
+                    f"<div style='background:#12121c;border:1px solid #2a2a45;"
+                    f"border-radius:6px;padding:12px 14px;font-family:monospace;"
+                    f"font-size:12px;color:#a0a0c8;'>"
+                    f"{source_text or '(no source text recorded)'}</div>",
+                    unsafe_allow_html=True,
+                )
+        else:
+            # ── No bounding polygon — use text-search highlight fallback ──────
+            _pdf_cache_key = f"_pdf_render_{excel_path}_{target_row}_{field}_textfallback"
+            with st.spinner("Rendering PDF page…"):
+                if _pdf_cache_key not in st.session_state:
+                    try:
+                        from modules.excel_renderer import render_pdf_page_text_highlight
+                        full_img, cropped_img = render_pdf_page_text_highlight(
+                            pdf_path    = excel_path,
+                            page_number = int(target_row),
+                            search_text = raw_value or source_text or field,
+                            dpi         = 150,
+                        )
+                        st.session_state[_pdf_cache_key] = (full_img, cropped_img)
+                    except Exception as e:
+                        st.session_state[_pdf_cache_key] = (None, None)
 
+                full_img, cropped_img = st.session_state.get(_pdf_cache_key, (None, None))
+
+            if cropped_img is not None:
+                st.image(
+                    cropped_img,
+                    use_container_width=True,
+                    caption=f"Field '{field}' highlighted on PDF Page {target_row}",
+                )
+            else:
+                st.markdown(
+                    f"<div style='background:#12121c;border:1px solid #2a2a45;border-radius:6px;"
+                    f"padding:12px 14px;font-family:monospace;font-size:12px;color:#a0a0c8;"
+                    f"line-height:1.6;margin-bottom:8px;'>"
+                    f"{source_text or '(no source text recorded)'}"
+                    f"</div>",
+                    unsafe_allow_html=True,
+                )
+
+            if source_text:
+                st.markdown(
+                    f"<div style='background:#12121c;border:1px solid #2a2a45;"
+                    f"border-radius:6px;padding:8px 12px;font-family:monospace;"
+                    f"font-size:11px;color:#a0a0c8;margin-top:8px;'>"
+                    f"{source_text}</div>",
+                    unsafe_allow_html=True,
+                )
+            st.info(
+                "📝 This field was extracted from page text — highlighted by text search."
+            )
+        return
+ 
+    # ── CSV branch ────────────────────────────────────────────────────────────
     if ext == ".csv":
         try:
+            import csv as _csv
             with open(excel_path, "r", encoding="utf-8-sig") as f:
-                all_rows = list(csv.reader(f))
+                all_rows = list(_csv.reader(f))
             if not all_rows:
                 return
             n_rows = len(all_rows)
             n_cols = max(len(r) for r in all_rows)
             r0, r1 = max(0, target_row - 4), min(n_rows, target_row + 4)
-
+ 
             col_headers = "".join(
                 f"<th style='background:#1a1a2e;color:#6b7280;font-size:11px;"
                 f"padding:5px 10px;border:1px solid #2a2a45;font-family:monospace;"
@@ -190,8 +245,8 @@ def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> 
             tbody = ""
             for r_idx in range(r0, r1):
                 row_data = all_rows[r_idx] if r_idx < len(all_rows) else []
-                is_tr = (r_idx + 1 == target_row)
-                rn_bg = "#1a2540" if is_tr else "#12121c"
+                is_tr    = (r_idx + 1 == target_row)
+                rn_bg    = "#1a2540" if is_tr else "#12121c"
                 rn_color = "#4f9cf9" if is_tr else "#555"
                 cells = (
                     f"<td style='background:{rn_bg};color:{rn_color};font-size:11px;"
@@ -200,10 +255,9 @@ def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> 
                 )
                 for c_idx in range(n_cols):
                     cell_val = row_data[c_idx] if c_idx < len(row_data) else ""
-                    is_tc = is_tr and (c_idx + 1 == target_col)
+                    is_tc    = is_tr and (c_idx + 1 == target_col)
                     if is_tc:
-                        style = ("background:#2a2010;border:2px solid #f5c842;"
-                                 "color:#fff;font-weight:bold;")
+                        style = "background:#2a2010;border:2px solid #f5c842;color:#fff;font-weight:bold;"
                     elif is_tr:
                         style = "background:#1a2540;border:1px solid rgba(79,156,249,0.3);color:#c8d8ff;"
                     else:
@@ -214,7 +268,7 @@ def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> 
                         f"font-family:monospace;'>{cell_val}</td>"
                     )
                 tbody += f"<tr>{cells}</tr>"
-
+ 
             st.markdown(
                 f"<div style='overflow-x:auto;border-radius:6px;border:1px solid #2a2a45;'>"
                 f"<table style='border-collapse:collapse;width:100%;'>"
@@ -224,7 +278,8 @@ def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> 
         except Exception as e:
             st.error(f"CSV preview error: {e}")
         return
-
+ 
+    # ── Excel branch ──────────────────────────────────────────────────────────
     cache_key = f"_rendered_{excel_path}_{sheet_name}"
     with st.spinner("Rendering sheet…"):
         if cache_key not in st.session_state:
@@ -234,7 +289,7 @@ def show_eye_popup(field: str, info: dict, excel_path: str, sheet_name: str) -> 
             st.session_state[cache_key] = (rendered_img, col_starts, row_starts, merged_master)
         else:
             rendered_img, col_starts, row_starts, merged_master = st.session_state[cache_key]
-
+ 
     try:
         img  = rendered_img.copy()
         draw = ImageDraw.Draw(img, "RGBA")
@@ -955,7 +1010,7 @@ def show_claim_journey_dialog(
            passed through (FILE PARSED → SCHEMA MAPPED → LLM CALLED →
            USER EDITS) with timestamps and function references.
         2. Field Transformation Timeline — one card per field showing:
-               Step 1 · Extracted from Excel (source column, raw value).
+               Step 1 · Extracted from Document (source column, raw value).
                Step 2 · Mapping method (EXACT/FUZZY/PARTIAL/LLM/TITLE/DIRECT)
                         with header similarity score, value quality score,
                         and overall confidence percentage.
@@ -1228,7 +1283,7 @@ def show_claim_journey_dialog(
             f"<div style='flex:1;'>"
             f"<div style='display:flex;align-items:center;gap:8px;'>"
             f"<div style='font-size:11px;font-weight:700;color:#34d399;font-family:monospace;"
-            f"text-transform:uppercase;letter-spacing:1px;'>Extracted from Excel</div>"
+            f"text-transform:uppercase;letter-spacing:1px;'>Extracted from Document</div>"
             f"<span style='font-size:9px;color:#555;font-family:monospace;margin-left:auto;'>"
             f"⏱ {_field_ts} · modules.parsing</span></div>"
             f"<div style='font-size:12px;color:#a0a0c8;margin-top:2px;'>"

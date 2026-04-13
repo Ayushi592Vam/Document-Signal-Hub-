@@ -40,9 +40,16 @@ def _compute_file_sha256(path: str) -> str:
 
 def _compute_sheet_sha256(file_path: str, sheet_name: str) -> str:
     ext = os.path.splitext(file_path)[1].lower()
-    if ext == ".csv":
+
+    # For non-Excel formats, hash the whole file bytes + sheet_name as the key
+    if ext in (".csv", ".pdf", ".docx"):
+        h = hashlib.sha256()
+        h.update(sheet_name.encode("utf-8"))
         with open(file_path, "rb") as f:
-            return hashlib.sha256(f.read()).hexdigest()
+            for chunk in iter(lambda: f.read(65_536), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
     wb = openpyxl.load_workbook(file_path, read_only=True, data_only=True)
     ws = wb[sheet_name]
     h  = hashlib.sha256()

@@ -76,14 +76,8 @@ from modules.word_parser import parse_word
 # ════════════════════════════════════════════════════════════════════════════
 
 def _extract_pdf_pages(pdf_path: str) -> list[str]:
-    """
-    Extract text from every page of a PDF.
-    Returns a list of per-page strings (index 0 = page 1).
-    Tries pypdf → PyPDF2 → pdfplumber → pdfminer in order.
-    """
     errors: list[str] = []
 
-    # ── pypdf ────────────────────────────────────────────────────────────────
     try:
         from pypdf import PdfReader
         reader = PdfReader(pdf_path)
@@ -95,7 +89,6 @@ def _extract_pdf_pages(pdf_path: str) -> list[str]:
     except Exception as e:
         errors.append(f"pypdf: {e}")
 
-    # ── PyPDF2 ───────────────────────────────────────────────────────────────
     try:
         import PyPDF2
         with open(pdf_path, "rb") as fh:
@@ -108,7 +101,6 @@ def _extract_pdf_pages(pdf_path: str) -> list[str]:
     except Exception as e:
         errors.append(f"PyPDF2: {e}")
 
-    # ── pdfplumber ───────────────────────────────────────────────────────────
     try:
         import pdfplumber
         with pdfplumber.open(pdf_path) as pdf:
@@ -120,7 +112,6 @@ def _extract_pdf_pages(pdf_path: str) -> list[str]:
     except Exception as e:
         errors.append(f"pdfplumber: {e}")
 
-    # ── pdfminer ─────────────────────────────────────────────────────────────
     try:
         from pdfminer.high_level import extract_pages
         from pdfminer.layout import LTAnon, LTChar, LTTextBox, LTTextLine
@@ -145,10 +136,6 @@ def _extract_pdf_pages(pdf_path: str) -> list[str]:
 
 
 def _tag_fields_with_pages(fields, pages: list[str]) -> None:
-    """
-    Set source_page (1-based) on each ExtractedField by searching its
-    extracted_value across the per-page texts.
-    """
     for field in fields:
         val = (field.extracted_value or "").strip()[:80]
         if not val:
@@ -156,17 +143,13 @@ def _tag_fields_with_pages(fields, pages: list[str]) -> None:
             continue
         for i, page_text in enumerate(pages):
             if val.lower() in page_text.lower():
-                field.source_page = i + 1   # 1-based
+                field.source_page = i + 1
                 break
         else:
             field.source_page = 1
 
 
 def _fields_to_row(fields, page_num: int) -> dict:
-    """
-    Convert a list of ExtractedField objects into one app-format row dict.
-    excel_row = page_num so the eye popup opens the correct PDF page.
-    """
     row: dict  = {}
     seen: set  = set()
     for i, field in enumerate(fields):
@@ -177,31 +160,25 @@ def _fields_to_row(fields, page_num: int) -> dict:
         row[name] = {
             "value":        field.extracted_value,
             "modified":     field.modified_value or field.extracted_value,
-            "excel_row":    page_num,       # ← page number drives eye popup
+            "excel_row":    page_num,
             "excel_col":    i + 1,
             "original":     field.extracted_value,
             "_section":     field.section,
             "_source_page": page_num,
         }
     return row
-def _word_fields_to_row(fields: list[dict]) -> dict:
-    """
-    Convert extracted DOCX fields into the same row structure used by Excel/PDF.
-    """
-    row = {}
 
+
+def _word_fields_to_row(fields: list[dict]) -> dict:
+    row = {}
     for f in fields:
         field_name = f.get("field_name", "").strip()
         if not field_name:
             continue
-
         val = str(f.get("value", "") or "").strip()
-
         row[field_name] = {
             "value": val,
             "modified": val,
-
-            # DOCX traceability
             "source_type": "word",
             "source_block": f.get("source_block"),
             "source_para": f.get("source_para"),
@@ -209,18 +186,15 @@ def _word_fields_to_row(fields: list[dict]) -> dict:
             "source_row": f.get("source_row"),
             "source_col": f.get("source_col"),
             "source_text": f.get("source_text", ""),
-
-            # keep compatibility with any old code paths
             "excel_row": None,
             "excel_col": None,
         }
-
     return row
 
-# ── doc types that are single-entity (one record, multiple pages OK) ──────────
-_SINGLE_ENTITY_DOC_TYPES: set | None = None   # populated lazily below
- 
- 
+
+_SINGLE_ENTITY_DOC_TYPES: set | None = None
+
+
 def _get_single_entity_types():
     global _SINGLE_ENTITY_DOC_TYPES
     if _SINGLE_ENTITY_DOC_TYPES is None:
@@ -238,230 +212,6 @@ def _get_single_entity_types():
     return _SINGLE_ENTITY_DOC_TYPES
 
 
- 
-# def _parse_pdf(pdf_path: str):
-#     """
-#     Full PDF pipeline — schema-free, page-aware extraction.
- 
-#     Returns
-#     -------
-#     data          : list[dict]  — one row per page (for non-loss-run PDFs)
-#     sheet_type    : str
-#     doc_type_enum : DocumentType | None
-#     """
-#     from modules.doc_classifier import classify_document, DocumentType
-#     from modules.document_extractors import extract, ExtractionResult
- 
-#     # 1. Extract per-page text
-#     pages = _extract_pdf_pages(pdf_path)
-#     if not pages or not any(p.strip() for p in pages):
-#         st.warning(
-#             "⚠️ No extractable text found in this PDF. "
-#             "It may be a scanned document. Please use a text-based PDF."
-#         )
-#         st.stop()
- 
-#     # 2. Classify using first 3 pages only
-#     classification_text = "\n\n".join(pages[:3])
-#     doc_type_enum = classify_document(classification_text)
- 
-#     # 3. Loss-run PDFs: delegate to existing parser — completely unchanged
-#     if doc_type_enum == DocumentType.TPA_LOSS_RUN:
-#         try:
-#             from modules.pdf_parser import extract_from_pdf
-#             data, sheet_type = extract_from_pdf(pdf_path)
-#             return data, sheet_type, doc_type_enum
-#         except Exception:
-#             pass
- 
-#     # 4. All other PDFs: extract each page independently
-#     #    Each page becomes its own row in the nav panel.
-#     #    Field names are kept raw — NO schema mapping, NO LLM renaming.
-#     data = []
- 
-#     for page_num, page_text in enumerate(pages, start=1):
-#         if not page_text.strip():
-#             continue   # skip blank pages
- 
-#         page_result: ExtractionResult = extract(doc_type_enum, page_text)
- 
-#         if not page_result.fields:
-#             continue
- 
-#         # Build the row for this page
-#         row: dict = {}
-#         seen: set = set()
- 
-#         for i, field in enumerate(page_result.fields):
-#             name = field.field_name
- 
-#             # Deduplicate within the page
-#             if name in seen:
-#                 name = f"{name} ({i})"
-#             seen.add(name)
- 
-#             row[name] = {
-#                 "value":        field.extracted_value,
-#                 "modified":     field.modified_value or field.extracted_value,
-#                 "excel_row":    page_num,   # ← tells eye popup which page to open
-#                 "excel_col":    i + 1,
-#                 "original":     field.extracted_value,
-#                 "_section":     field.section,
-#                 "_source_page": page_num,
-#                 "_pdf_raw":     True,       # ← flag: skip schema mapping for this record
-#             }
- 
-#         if row:
-#             data.append(row)
- 
-#     # Fallback if nothing extracted
-#     if not data:
-#         st.warning("No fields could be extracted from this PDF.")
-#         st.stop()
- 
-#     sheet_type = doc_type_enum.value.upper()
-#     return data, sheet_type, doc_type_enum
-# def _parse_pdf(file_path: str):
-#     """
-#     Parse PDF using Azure Document Intelligence and return page-wise rows
-#     in the same shape your UI expects.
-#     """
-#     result = parse_pdf_with_azure(file_path)
-
-#     data = []
-
-#     for page in result.get("pages", []):
-#         row = {}
-
-#         for f in page.get("fields", []):
-#             field_name = (f.get("field_name") or "").strip()
-#             if not field_name:
-#                 continue
-
-#             val = str(f.get("value", "") or "").strip()
-
-#             row[field_name] = {
-#                 "value": val,
-#                 "modified": val,
-
-#                 # PDF traceability
-#                 "source_type": "pdf",
-#                 "source_page": f.get("source_page", page.get("page_num")),
-#                 "source_text": f.get("source_text", ""),
-
-#                 # compatibility placeholders
-#                 "excel_row": None,
-#                 "excel_col": None,
-#                 "source_block": None,
-#                 "source_para": None,
-#                 "source_table": None,
-#                 "source_row": None,
-#                 "source_col": None,
-#             }
-
-#         data.append(row)
-
-#     sheet_type = "PDF"
-#     _doc_type_enum = None   # keep safe for downstream compatibility
-
-#     return data, sheet_type, _doc_type_enum 
-
-# def _parse_pdf(file_path: str):
-#     """
-#     Parse PDF using Azure Document Intelligence and return page-wise rows
-#     in the same shape your UI expects.
-#     """
-#     result = parse_pdf_with_azure(file_path)
-
-#     data = []
-
-#     for page in result.get("pages", []):
-#         row = {}
-
-#         for f in page.get("fields", []):
-#             field_name = (f.get("field_name") or "").strip()
-#             if not field_name:
-#                 continue
-
-#             val = str(f.get("value", "") or "").strip()
-#             if not val:
-#                 continue
-
-#             row[field_name] = {
-#                 "value": val,
-#                 "modified": val,
-
-#                 # PDF traceability
-#                 "source_type": "pdf",
-#                 "source_page": f.get("source_page", page.get("page_num")),
-#                 "source_text": f.get("source_text", val),
-
-#                 # compatibility placeholders
-#                 "excel_row": None,
-#                 "excel_col": None,
-#                 "source_block": None,
-#                 "source_para": None,
-#                 "source_table": None,
-#                 "source_row": None,
-#                 "source_col": None,
-#             }
-
-#         data.append(row)
-
-#     sheet_type = "PDF"
-#     _doc_type_enum = None
-
-#     return data, sheet_type, _doc_type_enum
-
-# def _parse_pdf(file_path: str):
-#     """
-#     Parse PDF using Azure Document Intelligence and return page-wise rows
-#     in the same shape the UI expects.
-#     No schema mapping. Raw fields shown as extracted.
-#     """
-#     result = parse_pdf_with_azure(file_path)
-
-#     data = []
-
-#     for page in result.get("pages", []):
-#         row = {}
-
-#         for f in page.get("fields", []):
-#             field_name = (f.get("field_name") or "").strip()
-#             if not field_name:
-#                 continue
-
-#             val = str(f.get("value", "") or "").strip()
-#             if not val:
-#                 continue
-
-#             row[field_name] = {
-#                 "value": val,
-#                 "modified": val,
-
-#                 # PDF traceability
-#                 "source_type": "pdf",
-#                 "source_page": f.get("source_page", page.get("page_num")),
-#                 "source_text": f.get("source_text", val),
-
-#                 # compatibility placeholders
-#                 "excel_row": None,
-#                 "excel_col": None,
-#                 "source_block": None,
-#                 "source_para": None,
-#                 "source_table": None,
-#                 "source_row": None,
-#                 "source_col": None,
-#             }
-
-#         data.append(row)
-
-#     sheet_type = "PDF"
-#     _doc_type_enum = None
-
-#     return data, sheet_type, _doc_type_enum
-
-
 def _parse_pdf(file_path: str):
     """
     Parse PDF using Azure Document Intelligence and return page-wise rows
@@ -469,6 +219,7 @@ def _parse_pdf(file_path: str):
 
     No schema mapping. Raw fields shown as extracted.
     excel_row = page_num (int) so the eye popup renders the correct page.
+    bounding_polygon is passed through for the eye popup highlight.
     """
     from modules.pdf_azure_parser import parse_pdf_with_azure
 
@@ -489,8 +240,6 @@ def _parse_pdf(file_path: str):
             if not val:
                 continue
 
-            # excel_row MUST be the page number (int) so the eye popup
-            # calls render_pdf_page_with_highlight(page_number=page_num)
             excel_row = f.get("excel_row")
             if not excel_row:
                 excel_row = page_num
@@ -500,17 +249,21 @@ def _parse_pdf(file_path: str):
                 "modified":     val,
                 "original":     val,
 
-                # ── eye popup ──────────────────────────────────────────
-                "excel_row":    int(excel_row),   # page number
-                "excel_col":    None,             # not applicable for PDF
+                # ── eye popup location ─────────────────────────────────────────
+                "excel_row":    int(excel_row),
+                "excel_col":    None,
 
-                # ── traceability ────────────────────────────────────────
+                # ── traceability ───────────────────────────────────────────────
                 "source_type":  "pdf",
                 "source_page":  int(f.get("source_page", page_num)),
                 "source_text":  f.get("source_text", f"{field_name}: {val}"),
 
-                # ── claim_panel routing ─────────────────────────────────
-                # Tells _render_plain_mode to skip schema mapping & STD badges
+                # ── Azure DI bounding box for eye popup highlight ──────────────
+                "bounding_polygon": f.get("bounding_polygon"),
+                "page_width":       f.get("page_width",  8.5),
+                "page_height":      f.get("page_height", 11.0),
+
+                # ── claim_panel routing ────────────────────────────────────────
                 "_pdf_raw":     True,
 
                 # compatibility placeholders
@@ -525,9 +278,10 @@ def _parse_pdf(file_path: str):
             data.append(row)
 
     sheet_type      = "PDF"
-    _doc_type_enum  = None   # keeps downstream compatibility
+    _doc_type_enum  = None
 
     return data, sheet_type, _doc_type_enum
+
 
 def _doc_type_enum_to_label(doc_type_enum) -> str | None:
     if doc_type_enum is None:
@@ -603,7 +357,7 @@ if st.session_state.get("_open_journey_dialog"):
 _, col_sheet_dropdown = st.columns([6.8, 1.2])
 
 # ── File upload ──────────────────────────────────────────────────────────────
-uploaded = st.file_uploader("Upload Loss Run Excel/CSV/PDF", type=["xlsx", "csv", "pdf","docx"])
+uploaded = st.file_uploader("Upload Loss Run Excel/CSV/PDF", type=["xlsx", "csv", "pdf", "docx"])
 
 if not uploaded:
     st.stop()
@@ -620,7 +374,14 @@ if st.session_state.get("last_uploaded") != _upload_fingerprint:
     with open(excel_path, "wb") as f:
         f.write(uploaded.read())
     st.session_state.last_uploaded = _upload_fingerprint
-    st.session_state.sheet_names   = get_sheet_names(excel_path)
+
+    if file_ext == ".pdf":
+        from modules.pdf_azure_parser import get_pdf_sheet_names
+        st.session_state.sheet_names = get_pdf_sheet_names(excel_path)
+    elif file_ext == ".docx":
+        st.session_state.sheet_names = ["Document"]
+    else:
+        st.session_state.sheet_names = get_sheet_names(excel_path)
     st.session_state.sheet_cache   = {}
     st.session_state.selected_idx  = 0
     st.session_state.focus_field   = None
@@ -649,21 +410,20 @@ if st.session_state.get("last_uploaded") != _upload_fingerprint:
         ):
             del st.session_state[key]
 
-    file_hash    = _compute_file_sha256(excel_path)
-    # sheet_hashes = {sn: _compute_sheet_sha256(excel_path, sn) for sn in st.session_state.sheet_names}
-    file_ext = os.path.splitext(excel_path)[1].lower()
+    file_hash = _compute_file_sha256(excel_path)
+    file_ext  = os.path.splitext(excel_path)[1].lower()
 
     if file_ext in [".docx", ".pdf", ".csv"]:
         sheet_hashes = {
-        st.session_state.sheet_names[0]: _compute_sheet_sha256(
-            excel_path, st.session_state.sheet_names[0]
-        )
-    }
+            st.session_state.sheet_names[0]: _compute_sheet_sha256(
+                excel_path, st.session_state.sheet_names[0]
+            )
+        }
     else:
         sheet_hashes = {
-        sn: _compute_sheet_sha256(excel_path, sn)
-        for sn in st.session_state.sheet_names
-    }
+            sn: _compute_sheet_sha256(excel_path, sn)
+            for sn in st.session_state.sheet_names
+        }
     st.session_state["current_file_hash"] = file_hash
     st.session_state["sheet_hashes"]      = sheet_hashes
 
@@ -739,11 +499,18 @@ if selected_sheet not in st.session_state.sheet_cache:
             for fld, fd in rec.items():
                 if isinstance(fd, dict) and "value" in fd:
                     row[fld] = {
-                        "value":     fd["value"],
-                        "modified":  fd["value"],
-                        "excel_row": fd.get("excel_row"),
-                        "excel_col": fd.get("excel_col"),
-                        "original":  fd.get("original", fd["value"]),
+                        "value":            fd["value"],
+                        "modified":         fd.get("modified", fd["value"]),
+                        "excel_row":        fd.get("excel_row"),
+                        "excel_col":        fd.get("excel_col"),
+                        "original":         fd.get("original", fd["value"]),
+                        "source_text":      fd.get("source_text", ""),
+                        "source_type":      fd.get("source_type", ""),
+                        "source_page":      fd.get("source_page"),
+                        "_pdf_raw":         fd.get("_pdf_raw", False),
+                        "bounding_polygon": fd.get("bounding_polygon"),
+                        "page_width":       fd.get("page_width",  8.5),
+                        "page_height":      fd.get("page_height", 11.0),
                     }
             if row:
                 _data.append(row)
@@ -754,26 +521,14 @@ if selected_sheet not in st.session_state.sheet_cache:
         with st.spinner(f"Reading '{selected_sheet}'…"):
 
             # ── PDF branch ────────────────────────────────────────────────────
-            
-            # if file_ext == ".pdf":
-            #     data, sheet_type, _doc_type_enum = _parse_pdf(excel_path)
-            #     merged_meta     = {}
-            #     totals_data     = {}
-            #     _title_flds     = {}
-            #     total_rows      = len(data)
-            #     total_cols      = len(data[0]) if data else 0
-            #     _col_rename_log = {}
-            # ── PDF branch ────────────────────────────────────────────────────
             if file_ext == ".pdf":
                 all_pages_data, sheet_type, _doc_type_enum = _parse_pdf(excel_path)
 
-    # selected_sheet is like "Page 1", "Page 2"
                 try:
                     selected_page_num = int(selected_sheet.replace("Page", "").strip())
                 except Exception:
                     selected_page_num = 1
 
-    # pick only the selected page row
                 if 1 <= selected_page_num <= len(all_pages_data):
                     data = [all_pages_data[selected_page_num - 1]]
                 else:
@@ -782,51 +537,44 @@ if selected_sheet not in st.session_state.sheet_cache:
                 merged_meta     = {}
                 totals_data     = {}
                 _col_rename_log = {}
-
                 total_rows      = len(data)
                 total_cols      = len(data[0]) if data else 0
 
-    # optional: build title fields from selected page only
                 _title_flds = {}
                 if data and isinstance(data[0], dict):
                     for k, v in list(data[0].items())[:8]:
                         _title_flds[k] = {
-                "value": v.get("value", "") if isinstance(v, dict) else str(v),
-                "modified": v.get("modified", v.get("value", "")) if isinstance(v, dict) else str(v),
-            }
+                            "value":    v.get("value", "") if isinstance(v, dict) else str(v),
+                            "modified": v.get("modified", v.get("value", "")) if isinstance(v, dict) else str(v),
+                        }
+
+            # ── DOCX branch ───────────────────────────────────────────────────
             elif file_ext == ".docx":
                 word_result = parse_word(excel_path, llm_client=None)
 
                 parsed_rows = [_word_fields_to_row(word_result.get("fields", []))]
                 data = parsed_rows
-                
-                sheet_type = "WORD_DOCUMENT"
-                merged_meta = []
-                totals_data={}
-                total_rows=len(parsed_rows)
-                column_types = {}
-                total_cols =len(parsed_rows[0]) if parsed_rows else 0
-                header_row = 1
-                start_row = 1
-                sheet_type = "UNKNOWN"
-                _col_rename_log = []
-                sh_hash = None
-                sheet_hashes = {}
-                _doc_type_enum = None
-                _doc_label = None
-                
 
-    # Title / summary fields for top card / metadata display
+                sheet_type      = "WORD_DOCUMENT"
+                merged_meta     = {}
+                totals_data     = {}
+                total_rows      = len(parsed_rows)
+                total_cols      = len(parsed_rows[0]) if parsed_rows else 0
+                _col_rename_log = {}
+                _doc_type_enum  = None
+
                 _title_flds = {
                     f["field_name"]: {
-            "value": f.get("value", ""),
-            "modified": f.get("value", "")
-        }
+                        "value":    f.get("value", ""),
+                        "modified": f.get("value", "")
+                    }
                     for f in word_result.get("fields", [])[:8]
                     if f.get("field_name")
-                    }
+                }
+
                 if not selected_sheet:
                     selected_sheet = "Document"
+
                 try:
                     sh_hash = _compute_sheet_sha256(excel_path, selected_sheet)
                 except Exception:
@@ -834,14 +582,15 @@ if selected_sheet not in st.session_state.sheet_cache:
 
                 sheet_hashes = {selected_sheet: sh_hash}
 
-
-    # Save into same cache/session structure as PDF
-                st.session_state.sheet_cache[selected_sheet] = parsed_rows
-
             # ── Excel / CSV branch ────────────────────────────────────────────
             else:
                 _doc_type_enum = None
-                data, sheet_type = extract_from_excel(excel_path, selected_sheet)
+
+                # ── FIX: extract_from_excel returns 3 values ──────────────────
+                _excel_result = extract_from_excel(excel_path, selected_sheet)
+                data       = _excel_result[0]
+                sheet_type = _excel_result[1]
+                _title_kvs_raw = _excel_result[2] if len(_excel_result) > 2 else {}
 
                 if not data:
                     st.warning(f"No data found in sheet '{selected_sheet}'.")
@@ -857,7 +606,16 @@ if selected_sheet not in st.session_state.sheet_cache:
                             inf["value"] = normalize_str(inf["value"])
                         inf["modified"] = inf.get("value", "")
 
+                # Build title fields from merged cells first
                 _title_flds = extract_title_fields(merged_meta)
+
+                # ── Merge in title KVs from parsing (key/value in separate
+                #    cells like "Prepared For:" | "Munich Re…") ──────────────
+                if _title_kvs_raw:
+                    for _tk, _tv in _title_kvs_raw.items():
+                        if _tk not in _title_flds:
+                            _title_flds[_tk] = _tv
+
                 data, _col_rename_log = rename_columns_to_standard(data)
 
             st.session_state.sheet_cache[selected_sheet] = {
@@ -1004,11 +762,11 @@ if data and file_ext != ".pdf":
             _llm_mappings    = _llm_map_result.get("mappings", {})
             _already_renamed = active.get("_llm_renamed", False)
             if _llm_mappings and not _already_renamed and file_ext != ".pdf":
-              active["data"], _extra_renames = rename_columns_to_standard(
-              active["data"], llm_map=_llm_map_result
-    )
-              data = active["data"]
-              active["_llm_renamed"] = True
+                active["data"], _extra_renames = rename_columns_to_standard(
+                    active["data"], llm_map=_llm_map_result
+                )
+                data = active["data"]
+                active["_llm_renamed"] = True
     else:
         active.pop("_llm_field_map", None)
 
@@ -1033,11 +791,11 @@ _claim_dup_results = st.session_state[_claim_dup_key]
 
 # ── Sheet card ────────────────────────────────────────────────────────────────
 render_sheet_card(
-    excel_path, selected_sheet, sheet_type, sh_hash, len(data),
+    selected_sheet, sheet_type, sh_hash, len(data),
     total_rows, total_cols, len(merged_meta), totals_data,
     len(title_fields), _from_cache, sheet_dup_info,
+    title_kvs=title_fields,
 )
-
 if _llm_map_ran:
     from ui.sheet_card import render_llm_map_banner
     render_llm_map_banner(_llm_map_result, _llm_map_count)
@@ -1059,8 +817,6 @@ with col_nav:
     new_idx = render_nav_panel(
         data=data,
         selected_sheet=selected_sheet,
-        doc_type=_nav_doc_type,
-        doc_label=_nav_doc_label,
     )
     if new_idx is not None and new_idx != st.session_state.selected_idx:
         _old_frozen = f"_frozen_claim_id_{selected_sheet}_{new_idx}"

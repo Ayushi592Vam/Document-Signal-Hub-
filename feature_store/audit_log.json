@@ -17673,5 +17673,1496 @@
       "Total Incurred": "Total Incurred",
       "Cause of Loss": "Cause of Loss"
     }
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-12T16:13:51.682278",
+    "filename": "loss_runs.xlsx",
+    "file_hash": "47f14b302b83b7b7409833a0f72996f8757168d2d40475bb984467f1bcbb09cd",
+    "sheets": [
+      "CGL Loss Run",
+      "Workers Comp Loss Run",
+      "Commercial Auto Loss Run",
+      "Commercial Property Loss Run",
+      "Prof Liability E&O Loss Run"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-12T16:13:53.279827",
+    "filename": "loss_runs.xlsx",
+    "sheet": "CGL Loss Run",
+    "sheet_hash": "0a53856501ec2c42f484328b7be87569ac8f90d6df3ccd7b9db90d0ad70c24de",
+    "claim_rows": 10,
+    "sheet_type": "LOSS_RUN",
+    "total_rows": 14,
+    "total_cols": 12,
+    "col_renames": {
+      "Claim_id": "Claim Number",
+      "Date of Loss": "Loss Date",
+      "Date Reported": "Date Reported",
+      "Claimant Name": "Claimant Name",
+      "Description of Loss": "Description of Loss",
+      "Indemnity Paid": "Indemnity Paid",
+      "Medical Paid": "Medical Paid",
+      "Expense Paid": "Expense Paid",
+      "Total Paid": "Total Paid",
+      "Reserve": "Reserve",
+      "Total Incurred": "Total Incurred",
+      "Status": "Status"
+    }
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-12T16:13:55.488143",
+    "sheet": "CGL Loss Run",
+    "claim_id": "CGL-001",
+    "source_fields": [
+      "Description of Loss"
+    ],
+    "input_text": "LACERATION",
+    "cause_of_loss": "Laceration",
+    "summary": "The claimant alleges that they suffered a laceration."
+  },
+  {
+    "event": "SHEET_LOADED_FROM_CACHE",
+    "timestamp": "2026-04-12T16:14:16.741765",
+    "filename": "loss_runs.xlsx",
+    "sheet": "CGL Loss Run",
+    "sheet_hash": "0a53856501ec2c42f484328b7be87569ac8f90d6df3ccd7b9db90d0ad70c24de"
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:16.934912",
+    "claim_id": "CGL-001",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:17.121329",
+    "claim_id": "CGL-002",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:17.321591",
+    "claim_id": "CGL-003",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:17.505691",
+    "claim_id": "CGL-004",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:17.693515",
+    "claim_id": "CGL-005",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:17.927159",
+    "claim_id": "CGL-006",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:18.113082",
+    "claim_id": "CGL-007",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:18.280001",
+    "claim_id": "CGL-008",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:18.457588",
+    "claim_id": "CGL-009",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-12T16:14:18.644988",
+    "claim_id": "CGL-010",
+    "sheet": "CGL Loss Run",
+    "filename": "loss_runs.xlsx",
+    "prev_filename": "loss_runs.xlsx",
+    "changed_fields": []
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-12T16:14:20.886331",
+    "sheet": "CGL Loss Run",
+    "claim_id": "CGL-001",
+    "source_fields": [
+      "Description of Loss"
+    ],
+    "input_text": "LACERATION",
+    "cause_of_loss": "Laceration",
+    "summary": "The claimant alleges that they suffered a laceration."
+  },
+  {
+    "event": "EXPORT_GENERATED",
+    "timestamp": "2026-04-12T16:36:25.816474",
+    "filename": "loss_runs.xlsx",
+    "sheet": "CGL Loss Run",
+    "export_type": "Standard JSON",
+    "records": 10
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T11:15:49.309501",
+    "filename": "TPA_14_Summit_RelevantPlusNoise.xlsx",
+    "file_hash": "8819f7a07b18f6c2c9096f3514017dbcecf39dbe96151a0e702ec8208213b603",
+    "sheets": [
+      "Cover Page",
+      "Claim Detail",
+      "Financial Summary",
+      "Glossary",
+      "Contact Info"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T11:15:52.835890",
+    "filename": "TPA_14_Summit_RelevantPlusNoise.xlsx",
+    "sheet": "Claim Detail",
+    "sheet_hash": "c8227efc8c780b5d651ba24bd8a4f09555b78e0a935fda099ac6e2d4bfef9aed",
+    "claim_rows": 14,
+    "sheet_type": "LOSS_RUN",
+    "total_rows": 19,
+    "total_cols": 13,
+    "col_renames": {
+      "Policy No.": "Policy Number",
+      "Claimant": "Claimant Name",
+      "Status": "Status",
+      "Coverage": "Coverage Type",
+      "Paid Indemnity": "Indemnity Paid",
+      "Total Incurred": "Total Incurred"
+    }
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:15:58.021024",
+    "sheet": "Claim Detail",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Claim #",
+      "Policy Number",
+      "Claimant Name",
+      "DOL",
+      "Reported",
+      "Status",
+      "Coverage Type",
+      "Indemnity Paid",
+      "Paid ALAE",
+      "O/S Indemnity",
+      "O/S ALAE",
+      "Total Incurred",
+      "Description"
+    ],
+    "mappings": {
+      "Claim #": "Claim Number",
+      "Policy Number": "Policy Number",
+      "Claimant Name": "Claimant Name",
+      "DOL": "Loss Date",
+      "Reported": "Date Reported",
+      "Status": "Status",
+      "Coverage Type": "Coverage Type",
+      "Indemnity Paid": "Indemnity Paid",
+      "Total Incurred": "Total Incurred",
+      "Description": "Description of Loss"
+    },
+    "unmapped": [
+      "Paid ALAE",
+      "O/S Indemnity",
+      "O/S ALAE"
+    ]
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-13T11:16:00.580430",
+    "sheet": "Claim Detail",
+    "claim_id": "SRS-945687",
+    "source_fields": [
+      "Description of Loss"
+    ],
+    "input_text": "Wind damage to signage and exterior cladding",
+    "cause_of_loss": "Wind / Hail",
+    "summary": "The claimant alleges that wind caused damage to signage and exterior cladding."
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T11:26:07.881631",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "file_hash": "890569c832e58254f08742bcae988b0e7160de87e87d54410c658d0744cce68d",
+    "sheets": [
+      "Page 1",
+      "Page 2"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T11:26:08.099753",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 10,
+    "col_renames": {}
+  },
+  {
+    "event": "SHEET_LOADED_FROM_CACHE",
+    "timestamp": "2026-04-13T11:28:28.679743",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071"
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T11:28:28.860320",
+    "claim_id": "Torts",
+    "sheet": "Page 1",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": []
+  },
+  {
+    "event": "SHEET_LOADED_FROM_CACHE",
+    "timestamp": "2026-04-13T11:30:39.410569",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071"
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T11:30:39.601256",
+    "claim_id": "Torts",
+    "sheet": "Page 1",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": []
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:30:43.171850",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T11:34:10.418285",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "file_hash": "890569c832e58254f08742bcae988b0e7160de87e87d54410c658d0744cce68d",
+    "sheets": [
+      "Page 1",
+      "Page 2"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T11:34:10.602524",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 10,
+    "col_renames": {}
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:34:14.222370",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_LOADED_FROM_CACHE",
+    "timestamp": "2026-04-13T11:35:57.695422",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071"
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T11:35:57.888730",
+    "claim_id": "Torts",
+    "sheet": "Page 1",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": []
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:36:02.459020",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_LOADED_FROM_CACHE",
+    "timestamp": "2026-04-13T11:39:04.003421",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071"
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T11:39:04.199671",
+    "claim_id": "Torts",
+    "sheet": "Page 1",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": []
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:39:08.839608",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_LOADED_FROM_CACHE",
+    "timestamp": "2026-04-13T11:55:41.892826",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071"
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T11:55:42.020265",
+    "claim_id": "Torts",
+    "sheet": "Page 1",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": []
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:55:46.060781",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "Date": "Loss Date",
+      "CASE NUMBER": "Claim Number",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T11:56:30.233090",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "file_hash": "890569c832e58254f08742bcae988b0e7160de87e87d54410c658d0744cce68d",
+    "sheets": [
+      "Page 1",
+      "Page 2"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T11:56:30.372107",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 10,
+    "col_renames": {}
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:56:33.616617",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T11:58:39.765663",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 2",
+    "sheet_hash": "",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 15,
+    "col_renames": {}
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T11:58:39.978239",
+    "claim_id": "Torts",
+    "sheet": "Page 2",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": [
+      "CASE LAST UPDATE",
+      "CASE NUMBER",
+      "CIRCUIT",
+      "Case Complaint Summary",
+      "Cause(s) of Action",
+      "DIVISION",
+      "Date",
+      "Docket",
+      "Docket prepared for",
+      "FILING COURT",
+      "FILING DATE",
+      "FILING LOCATION",
+      "JUDGE",
+      "LAST REFRESHED",
+      "MATTER TYPE",
+      "STATUS"
+    ]
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-13T11:58:41.984500",
+    "sheet": "Page 2",
+    "claim_id": "Torts",
+    "source_fields": [
+      "Cause(s) of Action"
+    ],
+    "input_text": "Declaratory Judgment regarding insurance coverage under policy number 11-03-018919744. . Contribution and indemnity claims by Separate Defendants Stogner and McNichols Trucking against Ethan Daniels a",
+    "cause_of_loss": "Other - Auto",
+    "summary": "The claimant alleges negligence claims against multiple defendants for injuries sustained by Norris, related to unauthorized use of a vehicle and lack of a valid operator's license."
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T11:58:45.587514",
+    "sheet": "Page 2_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "CASE NUMBER",
+      "FILING DATE",
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "STATUS",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "FILING DATE": "Loss Date",
+      "STATUS": "Status"
+    },
+    "unmapped": [
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ]
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:08:30.931348",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "file_hash": "890569c832e58254f08742bcae988b0e7160de87e87d54410c658d0744cce68d",
+    "sheets": [
+      "Page 1",
+      "Page 2"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:08:42.150057",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 10,
+    "col_renames": {}
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:08:45.114412",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_LOADED_FROM_CACHE",
+    "timestamp": "2026-04-13T12:13:56.228426",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071"
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T12:13:56.345841",
+    "claim_id": "Torts",
+    "sheet": "Page 1",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": []
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:13:59.276845",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:18:51.631400",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 2",
+    "sheet_hash": "",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 15,
+    "col_renames": {}
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T12:18:51.767989",
+    "claim_id": "Torts",
+    "sheet": "Page 2",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": [
+      "CASE LAST UPDATE",
+      "CASE NUMBER",
+      "CIRCUIT",
+      "Case Complaint Summary",
+      "Cause(s) of Action",
+      "DIVISION",
+      "Date",
+      "Docket",
+      "Docket prepared for",
+      "FILING COURT",
+      "FILING DATE",
+      "FILING LOCATION",
+      "JUDGE",
+      "LAST REFRESHED",
+      "MATTER TYPE",
+      "STATUS"
+    ]
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-13T12:18:54.031383",
+    "sheet": "Page 2",
+    "claim_id": "Torts",
+    "source_fields": [
+      "Cause(s) of Action"
+    ],
+    "input_text": "Declaratory Judgment regarding insurance coverage under policy number 11-03-018919744. . Contribution and indemnity claims by Separate Defendants Stogner and McNichols Trucking against Ethan Daniels a",
+    "cause_of_loss": "Other - Auto",
+    "summary": "The claimant alleges negligence claims against multiple defendants for injuries sustained by Norris, related to unauthorized use of a vehicle and lack of a valid operator's license."
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:18:57.059108",
+    "sheet": "Page 2_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "CASE NUMBER",
+      "FILING DATE",
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "STATUS",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "FILING DATE": "Loss Date",
+      "STATUS": "Status"
+    },
+    "unmapped": [
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ]
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:25:08.519091",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "file_hash": "890569c832e58254f08742bcae988b0e7160de87e87d54410c658d0744cce68d",
+    "sheets": [
+      "Page 1",
+      "Page 2"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:25:19.776815",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 10,
+    "col_renames": {}
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:25:23.446618",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:31:57.280572",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 2",
+    "sheet_hash": "",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 15,
+    "col_renames": {}
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T12:31:57.515514",
+    "claim_id": "Torts",
+    "sheet": "Page 2",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": [
+      "CASE LAST UPDATE",
+      "CASE NUMBER",
+      "CIRCUIT",
+      "Case Complaint Summary",
+      "Cause(s) of Action",
+      "DIVISION",
+      "Date",
+      "Docket",
+      "Docket prepared for",
+      "FILING COURT",
+      "FILING DATE",
+      "FILING LOCATION",
+      "JUDGE",
+      "LAST REFRESHED",
+      "MATTER TYPE",
+      "STATUS"
+    ]
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-13T12:31:59.956476",
+    "sheet": "Page 2",
+    "claim_id": "Torts",
+    "source_fields": [
+      "Cause(s) of Action"
+    ],
+    "input_text": "Declaratory Judgment regarding insurance coverage under policy number 11-03-018919744. . Contribution and indemnity claims by Separate Defendants Stogner and McNichols Trucking against Ethan Daniels a",
+    "cause_of_loss": "Other - Auto",
+    "summary": "The claimant alleges negligence claims against multiple defendants for injuries sustained by Norris, related to unauthorized use of a vehicle and lack of a valid operator's license."
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:32:03.116435",
+    "sheet": "Page 2_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "CASE NUMBER",
+      "FILING DATE",
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "STATUS",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "FILING DATE": "Loss Date",
+      "STATUS": "Status"
+    },
+    "unmapped": [
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ]
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:35:47.000974",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "file_hash": "dedebe994d9365dc55c616a3e96c55f763a069996ccb201c1e5e32cf501011b3",
+    "sheets": [
+      "GL - General Liability",
+      "Property",
+      "Workers Comp",
+      "Auto Liability",
+      "Professional Liability"
+    ]
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:36:14.957913",
+    "filename": "TPA_14_Summit_RelevantPlusNoise.xlsx",
+    "file_hash": "8819f7a07b18f6c2c9096f3514017dbcecf39dbe96151a0e702ec8208213b603",
+    "sheets": [
+      "Cover Page",
+      "Claim Detail",
+      "Financial Summary",
+      "Glossary",
+      "Contact Info"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:40:27.900159",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "sheet": "GL - General Liability",
+    "sheet_hash": "da9db1bce91b9aebac95fbf775c12bedfc8834d0595dd8f2936d61549bb5e6e4",
+    "claim_rows": 8,
+    "sheet_type": "LOSS_RUN",
+    "total_rows": 14,
+    "total_cols": 13,
+    "col_renames": {
+      "File Ref": "Claim Number",
+      "Named Insured": "Insured Name",
+      "Loss Date": "Loss Date",
+      "Report Date": "Date Reported",
+      "Current Status": "Status",
+      "Line of Business": "Line of Business",
+      "Indemnity Paid": "Indemnity Paid",
+      "Expense Paid": "Expense Paid",
+      "Total Incurred": "Total Incurred",
+      "Cause of Loss": "Cause of Loss"
+    }
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:41:04.689336",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "file_hash": "dedebe994d9365dc55c616a3e96c55f763a069996ccb201c1e5e32cf501011b3",
+    "sheets": [
+      "GL - General Liability",
+      "Property",
+      "Workers Comp",
+      "Auto Liability",
+      "Professional Liability"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:41:05.166247",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "sheet": "GL - General Liability",
+    "sheet_hash": "da9db1bce91b9aebac95fbf775c12bedfc8834d0595dd8f2936d61549bb5e6e4",
+    "claim_rows": 8,
+    "sheet_type": "LOSS_RUN",
+    "total_rows": 14,
+    "total_cols": 13,
+    "col_renames": {
+      "File Ref": "Claim Number",
+      "Named Insured": "Insured Name",
+      "Loss Date": "Loss Date",
+      "Report Date": "Date Reported",
+      "Current Status": "Status",
+      "Line of Business": "Line of Business",
+      "Indemnity Paid": "Indemnity Paid",
+      "Expense Paid": "Expense Paid",
+      "Total Incurred": "Total Incurred",
+      "Cause of Loss": "Cause of Loss"
+    }
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:41:20.925576",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "file_hash": "dedebe994d9365dc55c616a3e96c55f763a069996ccb201c1e5e32cf501011b3",
+    "sheets": [
+      "GL - General Liability",
+      "Property",
+      "Workers Comp",
+      "Auto Liability",
+      "Professional Liability"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:41:21.379987",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "sheet": "GL - General Liability",
+    "sheet_hash": "da9db1bce91b9aebac95fbf775c12bedfc8834d0595dd8f2936d61549bb5e6e4",
+    "claim_rows": 8,
+    "sheet_type": "LOSS_RUN",
+    "total_rows": 14,
+    "total_cols": 13,
+    "col_renames": {
+      "File Ref": "Claim Number",
+      "Named Insured": "Insured Name",
+      "Loss Date": "Loss Date",
+      "Report Date": "Date Reported",
+      "Current Status": "Status",
+      "Line of Business": "Line of Business",
+      "Indemnity Paid": "Indemnity Paid",
+      "Expense Paid": "Expense Paid",
+      "Total Incurred": "Total Incurred",
+      "Cause of Loss": "Cause of Loss"
+    }
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:43:53.756870",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "file_hash": "890569c832e58254f08742bcae988b0e7160de87e87d54410c658d0744cce68d",
+    "sheets": [
+      "Page 1",
+      "Page 2"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:44:06.420479",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 10,
+    "col_renames": {}
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:44:09.583898",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:45:32.518333",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 2",
+    "sheet_hash": "",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 15,
+    "col_renames": {}
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T12:45:32.756600",
+    "claim_id": "Torts",
+    "sheet": "Page 2",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": [
+      "CASE LAST UPDATE",
+      "CASE NUMBER",
+      "CIRCUIT",
+      "Case Complaint Summary",
+      "Cause(s) of Action",
+      "DIVISION",
+      "Date",
+      "Docket",
+      "Docket prepared for",
+      "FILING COURT",
+      "FILING DATE",
+      "FILING LOCATION",
+      "JUDGE",
+      "LAST REFRESHED",
+      "MATTER TYPE",
+      "STATUS"
+    ]
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-13T12:45:35.092569",
+    "sheet": "Page 2",
+    "claim_id": "Torts",
+    "source_fields": [
+      "Cause(s) of Action"
+    ],
+    "input_text": "Declaratory Judgment regarding insurance coverage under policy number 11-03-018919744. . Contribution and indemnity claims by Separate Defendants Stogner and McNichols Trucking against Ethan Daniels a",
+    "cause_of_loss": "Other - Auto",
+    "summary": "The claimant alleges negligence claims against multiple defendants for injuries sustained by Norris, related to unauthorized use of a vehicle and lack of a valid operator's license."
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:45:42.523370",
+    "sheet": "Page 2_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "CASE NUMBER",
+      "FILING DATE",
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "STATUS",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "FILING DATE": "Loss Date",
+      "STATUS": "Status"
+    },
+    "unmapped": [
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ]
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:53:33.525396",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "file_hash": "dedebe994d9365dc55c616a3e96c55f763a069996ccb201c1e5e32cf501011b3",
+    "sheets": [
+      "GL - General Liability",
+      "Property",
+      "Workers Comp",
+      "Auto Liability",
+      "Professional Liability"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:53:33.983659",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "sheet": "GL - General Liability",
+    "sheet_hash": "da9db1bce91b9aebac95fbf775c12bedfc8834d0595dd8f2936d61549bb5e6e4",
+    "claim_rows": 8,
+    "sheet_type": "LOSS_RUN",
+    "total_rows": 14,
+    "total_cols": 13,
+    "col_renames": {
+      "File Ref": "Claim Number",
+      "Named Insured": "Insured Name",
+      "Loss Date": "Loss Date",
+      "Report Date": "Date Reported",
+      "Current Status": "Status",
+      "Line of Business": "Line of Business",
+      "Indemnity Paid": "Indemnity Paid",
+      "Expense Paid": "Expense Paid",
+      "Total Incurred": "Total Incurred",
+      "Cause of Loss": "Cause of Loss"
+    }
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:55:51.523855",
+    "filename": "TPA_13_Continental_MultiLOB.xlsx",
+    "sheet": "Property",
+    "sheet_hash": "73645c3097e57a50a72a8f5f389c681805bd66146cec053935eb23239073fd55",
+    "claim_rows": 6,
+    "sheet_type": "LOSS_RUN",
+    "total_rows": 12,
+    "total_cols": 13,
+    "col_renames": {
+      "File Ref": "Claim Number",
+      "Named Insured": "Insured Name",
+      "Loss Date": "Loss Date",
+      "Report Date": "Date Reported",
+      "Current Status": "Status",
+      "Line of Business": "Line of Business",
+      "Indemnity Paid": "Indemnity Paid",
+      "Expense Paid": "Expense Paid",
+      "Total Incurred": "Total Incurred",
+      "Cause of Loss": "Cause of Loss"
+    }
+  },
+  {
+    "event": "FILE_INGESTED",
+    "timestamp": "2026-04-13T12:56:47.662129",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "file_hash": "890569c832e58254f08742bcae988b0e7160de87e87d54410c658d0744cce68d",
+    "sheets": [
+      "Page 1",
+      "Page 2"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T12:57:01.427829",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 1",
+    "sheet_hash": "db402c1a56bf83b5077725a3c9d4186cb00570e7d403038f8672660cc6b81071",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 10,
+    "col_renames": {}
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T12:57:05.683552",
+    "sheet": "Page 1_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "Date",
+      "CASE NUMBER",
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "CATEGORY",
+      "FILING DATE",
+      "MATTER TYPE",
+      "Docket",
+      "PRACTICE AREA"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "Date": "Loss Date",
+      "FILING DATE": "Date Reported",
+      "CATEGORY": "Line of Business",
+      "MATTER TYPE": "Description of Loss"
+    },
+    "unmapped": [
+      "Docket prepared for",
+      "LAST REFRESHED",
+      "JUDGE",
+      "Docket",
+      "PRACTICE AREA"
+    ]
+  },
+  {
+    "event": "SHEET_PARSED",
+    "timestamp": "2026-04-13T13:01:42.815223",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "sheet": "Page 2",
+    "sheet_hash": "",
+    "claim_rows": 1,
+    "sheet_type": "PDF",
+    "total_rows": 1,
+    "total_cols": 15,
+    "col_renames": {}
+  },
+  {
+    "event": "CLAIM_DUPLICATE_DETECTED",
+    "timestamp": "2026-04-13T13:01:43.064484",
+    "claim_id": "Torts",
+    "sheet": "Page 2",
+    "filename": "trellis_docket_Sample_Pdf.pdf",
+    "prev_filename": "trellis_docket_Sample_Pdf.pdf",
+    "changed_fields": [
+      "CASE LAST UPDATE",
+      "CASE NUMBER",
+      "CIRCUIT",
+      "Case Complaint Summary",
+      "Cause(s) of Action",
+      "DIVISION",
+      "Date",
+      "Docket",
+      "Docket prepared for",
+      "FILING COURT",
+      "FILING DATE",
+      "FILING LOCATION",
+      "JUDGE",
+      "LAST REFRESHED",
+      "MATTER TYPE",
+      "STATUS"
+    ]
+  },
+  {
+    "event": "LLM_CAUSE_ENRICHED",
+    "timestamp": "2026-04-13T13:01:45.756656",
+    "sheet": "Page 2",
+    "claim_id": "Torts",
+    "source_fields": [
+      "Cause(s) of Action"
+    ],
+    "input_text": "Declaratory Judgment regarding insurance coverage under policy number 11-03-018919744. . Contribution and indemnity claims by Separate Defendants Stogner and McNichols Trucking against Ethan Daniels a",
+    "cause_of_loss": "Other - Auto",
+    "summary": "The claimant alleges negligence claims against multiple defendants for injuries sustained by Norris, related to unauthorized use of a vehicle and lack of a valid operator's license."
+  },
+  {
+    "event": "LLM_FIELD_MAP",
+    "timestamp": "2026-04-13T13:01:48.978644",
+    "sheet": "Page 2_plain",
+    "schema": "Guidewire",
+    "source_cols": [
+      "CASE NUMBER",
+      "FILING DATE",
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "STATUS",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ],
+    "mappings": {
+      "CASE NUMBER": "Claim Number",
+      "FILING DATE": "Loss Date",
+      "STATUS": "Status"
+    },
+    "unmapped": [
+      "LAST REFRESHED",
+      "FILING LOCATION",
+      "FILING COURT",
+      "JUDGE",
+      "CATEGORY",
+      "PRACTICE AREA",
+      "MATTER TYPE",
+      "CASE LAST UPDATE",
+      "Cause(s) of Action",
+      "Case Complaint Summary",
+      "CIRCUIT",
+      "DIVISION"
+    ]
   }
 ]

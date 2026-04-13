@@ -18,12 +18,12 @@ def render_sheet_card(
     n_title_fields: int,
     from_cache: bool,
     sheet_dup_info: dict,
+    title_kvs: dict | None = None,
 ) -> None:
     totals_cls    = "hi" if totals_data else "mid"
     totals_found  = "Found" if totals_data else "None"
     type_cls      = "unk" if sheet_type == "UNKNOWN" else ""
 
-    # Build sub-pieces as plain strings FIRST — avoids any quote nesting inside f-string
     cache_badge = (
         "<span style='font-size:9px;color:#34d399;font-family:monospace;"
         "margin-left:6px;'>&#9889; from cache</span>"
@@ -69,6 +69,25 @@ def render_sheet_card(
     )
 
     st.markdown(html, unsafe_allow_html=True)
+
+    # ── Title metadata KV card ────────────────────────────────────────────────
+    if title_kvs:
+        skip_keys = {"Sheet Name"}
+        display_kvs = {k: v for k, v in title_kvs.items() if k not in skip_keys}
+        if display_kvs:
+            pills = "".join(
+                f"<div style='display:flex;gap:6px;align-items:baseline;"
+                f"padding:5px 0;border-bottom:1px solid #1e1e32;'>"
+                f"<span style='font-size:10px;color:#6b7280;font-family:monospace;"
+                f"text-transform:uppercase;letter-spacing:1px;min-width:140px;flex-shrink:0;'>"
+                f"{k}</span>"
+                f"<span style='font-size:12px;color:#e8e7ff;font-family:monospace;'>"
+                f"{v.get('value', '') if isinstance(v, dict) else str(v)}"
+                f"</span></div>"
+                for k, v in display_kvs.items()
+                if (v.get('value', '') if isinstance(v, dict) else str(v)).strip()
+            )
+            
 
     # Per-sheet duplicate warning
     _selected_dup = sheet_dup_info.get(selected_sheet)
